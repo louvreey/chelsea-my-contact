@@ -14,29 +14,32 @@ const [data, setData] = useState([]);
 
 const {navigation} = props;
 
+const getData = () => {
+  const allData = realm.objects('Contact');
+  setData(allData);
+};
 
-  const getData = () => {
-    const allData = realm.objects('Contact');
-    setData(allData);
-  };
+//ragu-ragu :))
+useEffect(() => {
+  const getData = navigation.addListener('focus', getData);
+});
 
-   useEffect(() => {
-    const getData = navigation.addListener('focus', getData)  
-   })
+const deleteContact = id => {
+  const data = realm.objects('Contact').filtered(`id = ${id}`);
+  realm.write(() => {
+    realm.delete(data);
+  });
 
-  const deleteContact = (id) => {
-    const data = realm.objects('Contact').filtered(`id = ${id}`)
-    realm.write(() => {
-      realm.delete(data)
-    })
-
-    const collectData = realm.objects('Contact')
-    setData(collectData)
-  }
+  const collectData = realm.objects('Contact');
+  setData(collectData);
+};
 
 const ContactListScreen = () => {
   return (
     <View style={styles.mainView}>
+      <View style={styles.header}>
+        <Text>Contact List</Text>
+      </View>
       <FlatList
         data={data}
         contentContainerStyle={styles.contentContainer}
@@ -49,12 +52,17 @@ const ContactListScreen = () => {
                 <Text style={styles.headerDescription}>{item.phoneNumber}</Text>
               </View>
 
-              <TouchableOpacity onPress={() => deleteContact()} >
+              <TouchableOpacity onPress={() => deleteContact(id)}>
                 <Icon name="cross" type="entypo" />
               </TouchableOpacity>
             </View>
           );
         }}
+        ListEmptyComponent={
+          <View style={styles.unsearchBox}>
+            <Text>No items.</Text>
+          </View>
+        }
       />
 
       <View style={styles.buttonView}>
@@ -83,6 +91,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  header: {
+    backgroundColor: '#8ACFFD',
+  },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -99,5 +110,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#B7F1D4',
     padding: 16,
     borderRadius: 100,
+  },
+  unsearchBox: {
+    alignItems: 'center',
+    margin: 8,
   },
 });

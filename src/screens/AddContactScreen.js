@@ -68,8 +68,7 @@ const AddContactScreen = () => {
         <TouchableOpacity
           style={styles.saveButton}
           //ragu-ragu
-          onPress={() => saveContact()}
-        >
+          onPress={() => saveContact()}>
           <Text style={styles.buttonText}>SAVE CONTACT</Text>
         </TouchableOpacity>
       </View>
