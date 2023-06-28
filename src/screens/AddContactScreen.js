@@ -6,9 +6,40 @@ import {
   TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
+import realm from '../../store/realm';
+
+const {navigation} = props;
 
 const [name, setName] = useState('');
+
 const [phoneNumber, setPhoneNumber] = useState('');
+
+const saveContactName = text => {
+  setName(text);
+};
+
+const savePhoneNumber = text => {
+  setPhoneNumber(text);
+};
+
+const saveContact = () => {
+  if (name !== '' && phoneNumber !== '') {
+    realm.write(() => {
+      const data = realm.objects('Contact');
+      const lastId = data.length === 0 ? 1 : data[data.length - 1].id;
+
+      realm.create('Contact', {
+        id: data.length === 0 ? lastId : lastId + 1,
+        name: name,
+        phoneNumber: phoneNumber,
+      });
+    });
+
+    navigation.navigate('ContactList');
+  } else {
+    Alert("Can't save your contact");
+  }
+};
 
 const AddContactScreen = () => {
   return (
@@ -19,6 +50,7 @@ const AddContactScreen = () => {
           style={styles.input}
           multiline
           placeholder="Write name here"
+          onChangeText={text => saveContactName(text)}
         />
       </View>
 
@@ -28,11 +60,16 @@ const AddContactScreen = () => {
           style={styles.input}
           multiline
           placeholder="Write phone number here"
+          onChangeText={text => savePhoneNumber(text)}
         />
       </View>
 
       <View style={styles.buttonView}>
-        <TouchableOpacity style={styles.saveButton}>
+        <TouchableOpacity
+          style={styles.saveButton}
+          //ragu-ragu
+          onPress={() => saveContact()}
+        >
           <Text style={styles.buttonText}>SAVE CONTACT</Text>
         </TouchableOpacity>
       </View>
