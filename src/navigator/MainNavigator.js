@@ -16,6 +16,9 @@ const MainNavigator = () => {
           component={ContactListScreen}
           options={{
             title: 'Contact List',
+            headerStyle: {
+              backgroundColor: '#8ACFFD',
+            },
           }}
         />
         <Stack.Screen
@@ -23,6 +26,9 @@ const MainNavigator = () => {
           component={AddContactScreen}
           options={{
             title: 'Add Contact',
+            headerStyle: {
+              backgroundColor: '#8ACFFD',
+            },
           }}
         />
       </Stack.Navigator>

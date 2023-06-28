@@ -10,36 +10,35 @@ import React, {useEffect, useState} from 'react';
 import {Icon} from 'react-native-elements';
 import realm from '../../store/realm';
 
-const [data, setData] = useState([]);
+const ContactListScreen = (props) => {
+  const [data, setData] = useState([]);
 
-const {navigation} = props;
+  const {navigation} = props;
 
-const getData = () => {
-  const allData = realm.objects('Contact');
-  setData(allData);
-};
+  // const getData = () => {
+  //   const allData = realm.objects('Contact');
+  // setData(allData);
+  // };
 
-//ragu-ragu :))
-useEffect(() => {
-  const getData = navigation.addListener('focus', getData);
-});
-
-const deleteContact = id => {
-  const data = realm.objects('Contact').filtered(`id = ${id}`);
-  realm.write(() => {
-    realm.delete(data);
+  //ragu-ragu
+  useEffect(() => {
+    // const contactPage = navigation.addListener('focus', getData);
+    // console.log(contactPage);
+    const allData = realm.objects('Contact');
+    console.log(allData)
   });
 
-  const collectData = realm.objects('Contact');
-  setData(collectData);
-};
+  const deleteContact = (id) => {
+    const data = realm.objects('Contact').filtered(`id = ${id}`);
+    realm.write(() => {
+      realm.delete(data);
+    });
 
-const ContactListScreen = () => {
+    const collectData = realm.objects('Contact');
+    setData(collectData);
+  };
   return (
     <View style={styles.mainView}>
-      <View style={styles.header}>
-        <Text>Contact List</Text>
-      </View>
       <FlatList
         data={data}
         contentContainerStyle={styles.contentContainer}
@@ -52,7 +51,7 @@ const ContactListScreen = () => {
                 <Text style={styles.headerDescription}>{item.phoneNumber}</Text>
               </View>
 
-              <TouchableOpacity onPress={() => deleteContact(id)}>
+              <TouchableOpacity onPress={() => deleteContact(item.id)}>
                 <Icon name="cross" type="entypo" />
               </TouchableOpacity>
             </View>
@@ -90,9 +89,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  header: {
-    backgroundColor: '#8ACFFD',
   },
   headerTitle: {
     fontSize: 20,
