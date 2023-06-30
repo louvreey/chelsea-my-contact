@@ -10,25 +10,27 @@ import React, {useEffect, useState} from 'react';
 import {Icon} from 'react-native-elements';
 import realm from '../../store/realm';
 
-const ContactListScreen = (props) => {
+const ContactListScreen = props => {
   const [data, setData] = useState([]);
 
   const {navigation} = props;
 
-  // const getData = () => {
-  //   const allData = realm.objects('Contact');
-  // setData(allData);
-  // };
+  const getData = () => {
+    const allData = realm.objects('Contact');
+    setData(allData);
+  };
 
   //ragu-ragu
   useEffect(() => {
-    // const contactPage = navigation.addListener('focus', getData);
-    // console.log(contactPage);
-    const allData = realm.objects('Contact');
-    console.log(allData)
-  });
+    const contactPage = navigation.addListener('focus', () => {
+      getData('');
+      // const allData = realm.objects('Contact');
+      // console.log(allData);
+    });
+    return contactPage;
+  }, []);
 
-  const deleteContact = (id) => {
+  const deleteContact = id => {
     const data = realm.objects('Contact').filtered(`id = ${id}`);
     realm.write(() => {
       realm.delete(data);
@@ -68,7 +70,7 @@ const ContactListScreen = (props) => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => navigation.navigate('AddContact')}>
-          <Icon name="plus" type="antdesign" size={24} />
+          <Icon name="plus" type="antdesign" />
         </TouchableOpacity>
       </View>
     </View>
