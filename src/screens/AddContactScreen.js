@@ -44,7 +44,7 @@ const AddContactScreen = (props) => {
   
   return (
     <View style={styles.mainContainer}>
-      <View style={inputContainer}>
+      <View style={styles.inputContainer}>
         <Text style={styles.inputTitle}>Name</Text>
         <TextInput
           style={styles.input}
@@ -54,7 +54,7 @@ const AddContactScreen = (props) => {
         />
       </View>
 
-      <View style={inputContainer}>
+      <View style={styles.inputContainer}>
         <Text style={styles.inputTitle}>Phone Number</Text>
         <TextInput
           style={styles.input}

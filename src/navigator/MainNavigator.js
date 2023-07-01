@@ -16,6 +16,7 @@ const MainNavigator = () => {
           component={ContactListScreen}
           options={{
             title: 'Contact List',
+            headerTitleAlign: 'center',
             headerStyle: {
               backgroundColor: '#8ACFFD',
             },
@@ -26,6 +27,7 @@ const MainNavigator = () => {
           component={AddContactScreen}
           options={{
             title: 'Add Contact',
+            headerTitleAlign: 'center',
             headerStyle: {
               backgroundColor: '#8ACFFD',
             },

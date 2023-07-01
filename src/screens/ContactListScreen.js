@@ -9,6 +9,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {Icon} from 'react-native-elements';
 import realm from '../../store/realm';
+// import {MaterialIcons} from '@expo/vector-icons';
 
 const ContactListScreen = props => {
   const [data, setData] = useState([]);
@@ -20,12 +21,9 @@ const ContactListScreen = props => {
     setData(allData);
   };
 
-  //ragu-ragu
   useEffect(() => {
     const contactPage = navigation.addListener('focus', () => {
       getData('');
-      // const allData = realm.objects('Contact');
-      // console.log(allData);
     });
     return contactPage;
   }, []);
@@ -54,7 +52,7 @@ const ContactListScreen = props => {
               </View>
 
               <TouchableOpacity onPress={() => deleteContact(item.id)}>
-                <Icon name="cross" type="entypo" />
+                <Icon name="cross" type="entypo" size={50} color="black" />
               </TouchableOpacity>
             </View>
           );
@@ -70,7 +68,8 @@ const ContactListScreen = props => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => navigation.navigate('AddContact')}>
-          <Icon name="plus" type="antdesign" />
+          <Icon name="plus" type="antdesign" size={24} color="black" />
+          {/* <MaterialIcons name="cross" size={24} color={black} /> */}
         </TouchableOpacity>
       </View>
     </View>
