@@ -1,17 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Icon} from 'react-native-elements';
 import realm from '../../store/realm';
-// import {MaterialIcons} from '@expo/vector-icons';
 
-const ContactListScreen = props => {
+const ContactListScreen = (props) => {
   const [data, setData] = useState([]);
 
   const {navigation} = props;
@@ -37,6 +29,7 @@ const ContactListScreen = props => {
     const collectData = realm.objects('Contact');
     setData(collectData);
   };
+
   return (
     <View style={styles.mainView}>
       <FlatList
@@ -52,7 +45,8 @@ const ContactListScreen = props => {
               </View>
 
               <TouchableOpacity onPress={() => deleteContact(item.id)}>
-                <Icon name="cross" type="entypo" size={50} color="black" />
+                {/* <Icon name="cross" type="entypo" size={50} color="black" /> */}
+                <Text style={{fontWeight: 'bold'}}>Delete</Text>
               </TouchableOpacity>
             </View>
           );
@@ -68,8 +62,8 @@ const ContactListScreen = props => {
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => navigation.navigate('AddContact')}>
-          <Icon name="plus" type="antdesign" size={24} color="black" />
-          {/* <MaterialIcons name="cross" size={24} color={black} /> */}
+          {/* <Icon name="plus" type="antdesign" size={24} color="black" /> */}
+          <Text style={{fontWeight: 'bold'}}>New</Text>
         </TouchableOpacity>
       </View>
     </View>
